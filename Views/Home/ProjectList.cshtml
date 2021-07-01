@@ -1,0 +1,118 @@
+﻿
+@{
+    ViewBag.Title = "ProjectList";
+}
+
+
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular.js"></script>
+<script src="~/App/app.js"></script>
+<script src="~/App/Admin/ProjectList.js?1501"></script>
+
+
+<div class="container-fluid" ng-app="app" ng-controller="ProjectListData">
+
+    <div class="container-fluid" style="margin-bottom:5px;">
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-primary" type="button" onclick="location.href=' @Url.Action("AddProject","Home")'">Add Project</button>
+                    <button class="btn btn-warning" type="button">Button</button>
+                </div>
+            </div>
+            <div class="col-lg-6" style="display:flex;justify-content:flex-end;">
+                <input style="width:50%;margin-right:5px;" class="form-control " type="search" placeholder="Search" aria-label="Search" ng-model="Find.$">
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron" >
+        <div class="table-responsive pre-scrollable">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+
+                        <th>
+                            Project
+                        </th>
+                        <th>
+                            Client
+                        </th>
+                        <th>
+                            Reference
+                        </th>
+                        <th>
+                            Project Manager
+                        </th>
+                        @* <th>Team Size
+                            </th>*@
+
+
+                        <th>
+                            Priority
+                        </th>
+                        @* <th>Status
+                            </th>*@
+                        <th>
+                            Project Value
+                        </th>
+                        <th>
+                            Progress(%)
+                        </th>
+                        @*<th>LastTask
+                            </th>*@
+                        <th>
+                            Project Completion Date
+                        </th>
+                        
+
+
+
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ListProjectEntry | filter: Find" ng-click="fnClick(item.ID)" style="cursor: pointer">
+                        <td>
+                            <a href="/Home/AddProject?VisitPId={{item.ID}}">{{item.ProjectName}}</a>
+                        </td>
+                        <td>
+                            {{item.ClientName}}
+                        </td>
+                        <td>
+                            {{item.ReferenceName}}
+                        </td>
+                        <td>
+                            {{item.ProjectManagerName}}
+                        </td>
+                        @*<td>{{item.AssignTo}}
+                            </td>
+                        *@
+
+                        @*<td><div ng-click="Priority(item.ID)"  style="background-color:red">{{item.Priorityn}}</div>
+                            </td>*@
+                        @* <td>{{item.Status}}
+                            </td>*@
+                        <td>
+                            {{item.Priorityn}}
+                        </td>
+                        <td>
+                            {{item.ProjectValue}}
+                        </td>
+                        <td>
+                            {{item.Progress}}
+                        </td>
+                        @* <td>{{item.TaskName}}
+                            </td>*@
+                        <td>
+                            {{item.TaskDate}}
+                        </td>
+                        
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <label id="lbltaskid" ng-model="VisitorPID" style="visibility: collapse;">{{ID}}</label>
+</div>

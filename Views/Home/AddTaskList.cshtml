@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "AddTaskList";
+}
+
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular.js"></script>
+<script src="~/App/app.js"></script>
+<script src="~/App/Admin/Dashboard.js"></script>
+
+
+<div class="container-fluid" ng-app="app" ng-controller="Task">
+
+    <div class="container-fluid" style="margin-bottom:5px;">
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-primary" type="button" onclick="location.href=' @Url.Action("AddTask","Home")'">Add Task</button>
+                    <button class="btn btn-warning" type="button">Button</button>
+                </div>
+            </div>
+            <div class="col-lg-6" style="display:flex;justify-content:flex-end;">
+                <input style="width:50%;margin-right:5px;" class="form-control " type="search" placeholder="Search" aria-label="Search" ng-model="See.$">
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron">
+        <div class="table-responsive pre-scrollable">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>TaskId</th>
+                        <th>Task Name</th>
+                        <th>ProjectName</th>
+                        <th>ItemType</th>
+                        <th>Priority</th>
+                        <th>AssignTo</th>
+                        <th>Status</th>
+                        <th>EstimateDate</th>
+                        <th>CompDate</th>
+
+                        @* <th>AssignDate</th>*@
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ListTask | filter: See">
+                        <td><a href="/Home/AddTask?VisitId={{item.ID}}">{{item.Taskid}}</a></td>
+                        <td>{{item.Task}}</td>
+                        <td>{{item.Project}}</td>
+                        <td>{{item.ItemTypen}}</td>
+                        <td>{{item.Priorityn}}</td>
+                        <td>{{item.AssignTo}}</td>
+                        <td>{{item.Statusn}}</td>
+                        <td>{{item.EstDate | date : "dd-MMM-yyyy"}}</td>
+                        <td ng-style="{'color': '{{item.color}}'}">{{item.CompletionDate | date : "dd-MMM-yyyy"}}</td>
+                        @*<td>{{item.AssignDate | date : "dd-MMM-yyyy"}}</td>*@
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <label id="UserCode" ng-model="EmpCode" style="visibility: collapse;">@Session["UserCode"]</label>
+
+</div>
+

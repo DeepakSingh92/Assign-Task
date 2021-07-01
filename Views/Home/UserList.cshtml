@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "UserList";
+}
+
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular.js"></script>
+<script src="~/App/app.js"></script>
+<script src="~/App/Admin/UserEntry.js"></script>
+
+
+<div class="container-fluid" ng-app="app" ng-controller="UserEntry">
+
+    <div class="container-fluid" style="margin-bottom:5px;">
+
+      
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-primary" type="button" onclick="location.href=' @Url.Action("UserEntry","Home")'">Add User</button>
+                    <button class="btn btn-warning" type="button">Button</button>
+                </div>
+            </div>
+            <div class="col-lg-6" style="display:flex;justify-content:flex-end;">
+                <input style="width:50%;margin-right:5px;" class="form-control " type="search" placeholder="Search" aria-label="Search" ng-model="Find.$">
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron">
+        <div class="table-responsive pre-scrollable"s>
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        @*<th>ID
+                        </th>*@
+                        <th>
+                            User Name
+                        </th>
+                        <th>
+                            Mobile No.
+                        </th>
+                        <th>
+                            Email Id
+                        </th>
+                        <th>
+                            Role
+                        </th>
+                        @* <th>LastTask
+                        </th>*@
+                        @*<th>
+                            Reliving Date
+                        </th>*@
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ListUserEntry | filter: Find" ng-click="fnClick(item.ID)" style="cursor: pointer">
+                        @* <td>{{item.ID}}
+                        </td>*@
+                        <td>
+                            <a href="/Home/UserEntry?VisitUId={{item.ID}}">{{item.UserName}}</a>
+                        </td>
+                        <td>
+                            {{item.Mobile}}
+                        </td>
+                        <td>
+                            {{item.MailID}}
+                        </td>
+                        <td>
+                            {{item.Role}}
+                        </td>
+                        @*<td>{{item.TaskName}}
+                        </td>*@
+                        @*<td>
+                            {{item.TaskDate}}
+                        </td>*@
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <label id="UserCode" ng-model="EmpCode" style="visibility: collapse;">@Session["UserCode"]</label>
+
+    </div>
+ 
+</div>
+
+
+

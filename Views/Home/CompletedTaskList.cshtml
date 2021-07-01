@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "CompletedTaskList";
+}
+
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular.js"></script>
+<script src="~/App/app.js"></script>
+<script src="~/App/Admin/CompletedTaskList.js"></script>
+
+
+<style type="text/css">
+    .selected {
+        background-color: darksalmon;
+    }
+</style>
+
+<div class="container-fluid" ng-app="app" ng-controller="CompTask">
+
+    <div class="container-fluid" style="margin-bottom:5px;">
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-primary" type="button" onclick="location.href=' @Url.Action("UserEntry","Home")'">Add User</button>
+                    <button class="btn btn-warning" type="button">Button</button>
+                </div>
+            </div>
+            <div class="col-lg-6" style="display:flex;justify-content:flex-end;">
+                <input style="width:50%;margin-right:5px;" class="form-control " type="search" placeholder="Search" aria-label="Search" ng-model="Find.$">
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron">
+        <div class="row row-cols-3 mb-4">
+            <div class="col">
+                <label class="Project"><b ng-style="lblproject;">Project</b></label>
+                <select class="form-control" ng-model="Project" ng-change="GetRecordsp()" ng-focus="lblproject={color:'blue'}" ng-blur="lblproject={color:'black'}">
+                    <option ng-repeat="item in ListProject" ng-selected="ProjectID=={{item.Code}}" value="{{item.Code}}">{{item.Desc}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="table-responsive pre-scrollable mt-4">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>TaskId</th>
+
+                        <th>Task Name</th>
+                        <th>ProjectName</th>
+                        <th>ItemType</th>
+                        <th>Priority</th>
+                        <th>AssignTo</th>
+                        <th>Status</th>
+                        <th>EstimateDate</th>
+                        <th>CompDate</th>
+                        @*<th>Test</th>*@
+                        @* <th>AssignDate</th>*@
+                    </tr>
+                </thead>
+                <tbody>
+
+
+
+                    <tr ng-repeat="item in ListTask | filter: Find " ng-class="{'selected': is_highlight(item) }">
+
+
+                        <td><a href="/Home/AddTask?VisitId={{item.ID}}">{{item.Taskid}}</a></td>
+
+                        <td>{{item.Task}}</td>
+                        <td>{{item.Project}}</td>
+                        <td>{{item.ItemTypen}}</td>
+                        <td>{{item.Priorityn}}</td>
+                        <td>{{item.AssignTo}}</td>
+                        <td>{{item.Statusn}}</td>
+                        <td>{{item.EstDate | date : "dd-MMM-yyyy"}}</td>
+                        <td>{{item.CompletionDate | date : "dd-MMM-yyyy"}}</td>
+                        @*<td >{{item.Test}}</td>*@
+                        @*     <td>{{item.AssignDate | date : "dd-MMM-yyyy"}}</td>*@
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+
+        <label id="UserCode" ng-model="EmpCode" style="visibility: collapse;">@Session["UserCode"]</label>
+
+    </div>
+
+</div>
+
+

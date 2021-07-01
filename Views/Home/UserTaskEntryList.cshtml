@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewBag.Title = "UserTaskEntryList";
+}
+
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular.js"></script>
+<script src="~/App/app.js"></script>
+<script src="~/App/Admin/MyTask.js"></script>
+
+
+<div class="container-fluid" ng-app="app" ng-controller="MyTask">
+
+    <div class="container-fluid" style="margin-bottom:5px;">
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-primary" type="button" onclick="location.href=' @Url.Action("AddTask","Home")'">Search</button>
+                    <button class="btn btn-warning" type="button">Button</button>
+                </div>
+            </div>
+            <div class="col-lg-6" style="display:flex;justify-content:flex-end;">
+                <input style="width:50%;margin-right:5px;" class="form-control " type="search" placeholder="Search" aria-label="Search" ng-model="Find.$">
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron">
+        <div class="container-fluid">
+            <div class="row row-cols-3 mb-4">
+                <div class="col">
+                    <label class="Project"><b ng-style="lblproject;">Project</b></label>
+
+                    <select class="form-control" ng-model="Project" ng-change="GetRecordsnew()" ng-focus="lblproject={color:'blue'}" ng-blur="lblproject={color:'black'}">
+
+                        <option ng-repeat="item in ListProject" ng-selected="ProjectID=={{item.Code}}" value="{{item.Code}}">{{item.Desc}}</option>
+                    </select>
+
+                </div>
+                <div class="col">
+                    <label class="task"><b ng-style="lbltn;">Task</b></label>
+
+                    <select class="form-control" ng-model="ItemTypeID" ng-change="GetRecordsnew()" ng-focus="lbltn={color:'blue'}" ng-blur="lbltn={color:'black'}">
+                        <option ng-repeat="item in Listitemtype" ng-selected="ItemTypeID=={{item.ID}}" value="{{item.ID}}">{{item.ItemType}}</option>
+                    </select>
+
+                </div>
+                <div class="col">
+                    <label class="Status"><b ng-style="lbls;">Status</b></label>
+
+                    <select class="form-control" ng-model="StatusID" ng-change="GetRecordsnew()" ng-focus="lbls={color:'blue'}" ng-blur="lbls={color:'black'}">
+                        <option ng-repeat="item in Liststatus" ng-selected="StatusID=={{item.ID}}" value="{{item.ID}}">{{item.tstatus}}</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="row row-cols-3 mb-4">
+                <div class="col">
+                    <label class="Priority"><b ng-style="lblp;">Priority</b></label>
+
+                    <select class="form-control" ng-model="PriorityID" ng-change="GetRecordsnew()" ng-focus="lblprojectprio={color:'blue'}" ng-blur="lblprojectprio={color:'black'}">
+
+                        <option ng-repeat="item in Listpriority" ng-selected="PriorityID=={{item.ID}}" value="{{item.ID}}">{{item.priority1}}</option>
+                    </select>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+        <div class="table-responsive pre-scrollable" style="margin-top:10px;">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>TaskId</th>
+                        <th>Task Name</th>
+                        <th>ProjectName</th>
+                        <th>ItemType</th>
+                        <th>Priority</th>
+                        @* <th>AssignTo</th>*@
+                        <th>Status</th>
+                        <th>EstimateDate</th>
+                        <th>CompDate</th>
+                        <th>AssignDate</th>
+                        <th>Check  In/Out</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ListTask1 | filter: Find">
+                        <td><a href="/Home/EditUserTaskEntryList?VisitId={{item.ID}}">{{item.Taskid}}</a></td>
+                        <td>{{item.Task}}</td>
+                        <td>{{item.Project}}</td>
+                        <td>{{item.ItemTypen}}</td>
+                        <td>{{item.Priorityn}}</td>
+                        @*  <td>{{item.AssignTo}}</td>*@
+                        <td>{{item.Statusn}}</td>
+                        <td>{{item.EstDate | date : "dd-MMM-yyyy"}}</td>
+                        <td>{{item.CompletionDate | date : "dd-MMM-yyyy"}}</td>
+                        <td>{{item.AssignDate | date : "dd-MMM-yyyy"}}</td>
+
+                        <td ng-show="(item.Statusn == 'Completed' ? false:true)">
+                            <a title="CheckIn" ng-if="(item.check_in == 1 ? true:false)" ng-click="fnClick(item.ID,1)" style="cursor: pointer">
+                                <img src="~/Images/C_IN.png" height="40" width="120" />
+                            </a>
+                            <a title="CheckIn" ng-if="(item.check_in == 2 ? true:false)" ng-click="fnClick(item.ID,2)" style="cursor: pointer">
+                                <img src="~/Images/C_OUT.jpg" height="40" width="120" />
+                            </a>
+                        </td>
+
+                    </tr>
+
+
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+    </div>
+
+    <div style="width: 100%; display: block;" ng-if="IsShow" class="modal" ng-controller="MyTask">
+        <div class="modal-content" style="margin: 0 auto; width: 50%; margin-top: 150px;">
+            <h3>Reason</h3>
+            <textarea rows="3" ng-model="Reason" style="width: 100%; padding-bottom: 10px;"></textarea>
+            <select class="form-control" ng-model="StatusID" ng-focus="lbls={color:'blue'}" ng-blur="lbls={color:'black'}">
+                <option ng-repeat="item in Liststatus" ng-selected="StatusID=={{item.ID}}" value="{{item.ID}}">{{item.tstatus}}</option>
+            </select>
+
+            <input type="button" class="btn btn-danger" value="cancel" style="float: right; margin: 5px;" ng-click="cancel()" />
+            <input type="button" class="btn btn-primary" value="Submit" style="float: right; margin: 5px;" ng-click="submit(item.ID)" />
+
+        </div>
+    </div>
+    <label id="getTaskValue" style="visibility: collapse;">{{IDdd}}</label>
+    <label id="UserCode" ng-model="EmpCode" style="visibility: collapse;">@Session["UserCode"]</label>
+</div>
+

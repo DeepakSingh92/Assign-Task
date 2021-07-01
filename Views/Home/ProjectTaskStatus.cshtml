@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "ProjectTaskStatus";
+}
+
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular.js"></script>
+<script src="~/App/app.js"></script>
+<script src="~/App/Admin/ProjectTaskStatus.js?1500"></script>
+
+
+<div class="container-fluid" ng-app="app" ng-controller="ProjectTaskStatusCtrl">
+
+    <div class="container-fluid" style="margin-bottom:5px;">
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-primary" type="button" onclick="location.href=' @Url.Action("AddTask","Home")'">Add Task</button>
+                    <button class="btn btn-warning" type="button">Button</button>
+                </div>
+            </div>
+            <div class="col-lg-6" style="display:flex;justify-content:flex-end;">
+                <input style="width:50%;margin-right:5px;" class="form-control " type="search" placeholder="Search" aria-label="Search" ng-model="Find.$">
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron">
+        <div class="container-fluid">
+            <div class="row row-cols-3">
+                <div class="col">
+                    <label class="control-label col-sm-5"><b ng-style="lblprojectend;">From Date:</b></label>
+                    <div class="col-sm-7">
+                        <input class="form-control" type="date" ng-model="FromDate" ng-focus="lblprojectend={color:'blue'}" ng-blur="lblprojectend={color:'black'}" />
+                    </div>
+                </div>
+                <div class="col">
+                    <label class="control-label col-sm-5"><b ng-style="lblprojectstr;">To Date:</b></label>
+                    <div class="col-sm-7">
+                        <input class="form-control" type="date" ng-model="ToDate" ng-focus="lblprojectstr={color:'blue'}" ng-blur="lblprojectstr={color:'black'}" />
+                    </div>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-info" ng-click="Search()">Search</button>
+
+                </div>
+            </div>
+            <div class="row row-cols-3">
+                <div class="col">
+                    <label class="control-label col-sm-5"><b>Project:</b></label>
+                    <div class="col-sm-7">
+                        <select class="form-control" ng-model="Project" ng-change="Search()">
+                            <option ng-repeat="item in ListProject" ng-selected="ProjectID=={{item.Code}}" value="{{item.Code}}">{{item.Desc}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <label class="control-label col-sm-5"><b ng-style="lblprojectprio;">Report Type</b></label>
+                    <div class=" col-sm-7">
+                        <select class="form-control" ng-model="ReportTypeId " ng-change="GetDate1()" ng-focus="lblprojectprio={color:'blue'}" ng-blur="lblprojectprio={color:'black'}">
+
+
+                            <option ng-repeat="item in ReportTypeList" ng-selected="ReportTypeId=={{item.Code}}" value="{{item.Code}}">{{item.Desc}}</option>
+
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="table-responsive pre-scrollable" style="margin-top:5px;">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Total Task</th>
+
+                        <th>Fail Task</th>
+                        <th>Success Task</th>
+                        <th>Progress %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in DetailTask1 | filter: Find">
+
+                        <td>{{item.ProjectName}}</td>
+                        <td>{{item.TotalTask}}</td>
+
+                        <td>{{item.FailTask}}</td>
+                        <td>{{item.SuccessTask}}</td>
+                        <td>{{item.Progress}}</td>
+
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    </div>
+
+    <label id="UserCode" ng-model="EmpCode" style="visibility: collapse;">@Session["UserCode"]</label>
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "ClientEntry";
+}
+
+
+
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular.js"></script>
+<script src="~/App/app.js"></script>
+<script src="~/App/Admin/ClientEntry.js"></script>
+
+
+<div class="container-fluid" ng-app="app" ng-controller="ClientEntry">
+    <div class="container-fluid" style="margin-bottom:5px;">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-primary" type="button" onclick="location.href=' @Url.Action("ClientList","Home")'">Back To ClientList</button>
+                    <button class="btn btn-warning" type="button" ng-click="SubmitClient()">Save Client</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="jumbotron" style="background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); ">
+
+        <div class="row  row-cols-3">
+            <div class="col">
+                <div class="form-input" style="margin-bottom: 40px">
+                    <label><b ng-style="lblclina;">Client Name</b><span style="color: red">*</span></label>
+                    <input class="form-control " type="text" autocomplete="off" id="ClientName" style="height: 100%; width: 100%" ng-model="ClientName" name="ClientName" ng-focus="lblclina={color:'blue'}" ng-blur="lblclina={color:'black'}">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-input" style="margin-bottom: 40px">
+                    <label><b ng-style="lblrefna;">Reference Name</b> </label>
+                    <select class="form-control" ng-model="ReferenceID" ng-focus="lblrefna={color:'blue'}" style="height: 100%; width: 100%" ng-blur="lblrefna={color:'black'}">
+                        <option ng-repeat="item in ListReferenceName" ng-selected="ReferenceID=={{item.ID}}" value="{{item.ID}}">{{item.ReferenceName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-input" style="margin-bottom:40px">
+                    <label><b ng-style="lblconper;">Contact Person</b> </label>
+                    <input class="form-control " type="text" ng-model="ContactPerson" style="height: 100%; width: 100%" ng-focus="lblconper={color:'blue'}" ng-blur="lblconper={color:'black'}">
+                </div>
+            </div>
+        </div>
+        <div class="row  row-cols-3">
+            <div class="col">
+                <div class="form-input" style="margin-bottom:40px">
+                    <label for="time"><b ng-style="lblmobna;">Mobile No</b><span style="color: red">*</span></label>
+
+                    <script language="javascript" type="text/javascript">
+                        function limitText(limitField, limitNum) {
+                            if (limitField.value.length > limitNum) {
+                                alert("Enter 10 digit Mobile Number");
+                                limitField.value = limitField.value.substring(0, limitNum);
+                            }
+                        }
+
+                    </script>
+                    <input class="form-control " type="TEXT" style="  height: 100%; width: 100%" onkeyup="limitText(this,10);" onkeydown="limitText(this,10);" ng-model="PhoneNo" ng-keypress="AllowDigitonly($event)" ng-focus="lblmobna={color:'blue'}" ng-blur="lblmobna={color:'black'}">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-input" style="margin-bottom:40px">
+                    <label><b ng-style="lblmail;">Email Id</b><span style="color: red">*</span></label>
+                    <input class="form-control " type="text" ng-model="EmailId" style=" height: 100%; width: 100%" ng-focus="lblmail={color:'blue'}" ng-blur="lblmail={color:'black'}">
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+
+
+    <label id="lblclientid" ng-model="VisitorCID" style="visibility: collapse;">@ViewBag.VisitorCID</label>
+    <label id="EmpId" ng-model="ProjID" style="visibility: collapse;"></label>
+</div>
